@@ -6,7 +6,7 @@ public class Globals {
 
     // Main
     public static final String ApplicationTitle = "Track&Trace";
-    public static final String LayoutFileName = "layout.fxml";
+    public static final String LayoutFileName = "/layouts/layout.fxml";
     public static final int ApplicationSceneWidth = 300;
     public static final int ApplicationSceneHeight = 275;
 
