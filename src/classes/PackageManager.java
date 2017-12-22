@@ -2,7 +2,6 @@ package classes;
 
 import interfaces.IPackageManager;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PackageManager implements IPackageManager {
 

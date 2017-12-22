@@ -1,7 +1,12 @@
 package classes;
 
+import globals.Globals;
 import interfaces.IAccountManager;
+import RMIinterfaces.IAccountQueries;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 public class AccountManager implements IAccountManager {
 
@@ -11,9 +16,10 @@ public class AccountManager implements IAccountManager {
      * @param password password corresponding to new Account
      * @param isEmployee employee status corresponding to Account
      * @param address address corresponding to new Account
+     * @param emailAddress emailAddress of new Account
      */
     @Override
-    public void registerAccount(String username, String password, boolean isEmployee, String address) {
+    public void registerAccount(String username, String password, boolean isEmployee, String address, String emailAddress) {
         throw new NotImplementedException();
     }
 
@@ -54,7 +60,20 @@ public class AccountManager implements IAccountManager {
      */
     @Override
     public boolean logIn(String username, String password) {
-        throw new NotImplementedException();
+        try {
+            IAccountQueries stub = (IAccountQueries) Globals.registry.lookup(Globals.accountQueriesBindingName);
+            Account response = stub.logIn(username, password);
+
+            // TODO set loggedInAccount in Globals
+
+            System.out.println("response: " + response);
+
+            return response != null;
+        } catch (RemoteException | NotBoundException e) {
+            System.err.println("Client exception: " + e.toString());
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**

@@ -3,6 +3,7 @@ package classes;
 import enums.ShippingType;
 import enums.Status;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Package {
@@ -12,9 +13,9 @@ public class Package {
     private ShippingType shippingType;
     private Status status;
     private double size;
-    private double weight;
-    private String contens;
-    private Date expectedDeliveryDate;
+    private int weight;
+    private String contents;
+    private LocalDate expectedDeliveryDate;
     private double locationLat;
     private double locationLong;
 
@@ -57,24 +58,24 @@ public class Package {
         this.size = size;
     }
 
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
-    public void setWeight(double weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 
-    public String getContens() {
-        return contens;
+    public String getContents() {
+        return contents;
     }
-    public void setContens(String contens) {
-        this.contens = contens;
+    public void setContents(String contents) {
+        this.contents = contents;
     }
 
-    public Date getExpectedDeliveryDate() {
+    public LocalDate getExpectedDeliveryDate() {
         return expectedDeliveryDate;
     }
-    public void setExpectedDeliveryDate(Date expectedDeliveryDate) {
+    public void setExpectedDeliveryDate(LocalDate expectedDeliveryDate) {
         this.expectedDeliveryDate = expectedDeliveryDate;
     }
 
@@ -93,7 +94,7 @@ public class Package {
     }
 
     public Package(int ID, String name, String fromCompany, ShippingType shippingType, Status status,
-                   double size, double weight, String contens, Date expectedDeliveryDate,
+                   double size, int weight, String contents, LocalDate expectedDeliveryDate,
                    double locationLat, double locationLong) {
         this.ID = ID;
         this.name = name;
@@ -102,14 +103,14 @@ public class Package {
         this.status = status;
         this.size = size;
         this.weight = weight;
-        this.contens = contens;
+        this.contents = contents;
         this.expectedDeliveryDate = expectedDeliveryDate;
         this.locationLat = locationLat;
         this.locationLong = locationLong;
     }
 
     public Package(String name, String fromCompany, ShippingType shippingType, Status status,
-                   double size, double weight, String contens, Date expectedDeliveryDate,
+                   double size, int weight, String contents, LocalDate expectedDeliveryDate,
                    double locationLat, double locationLong) {
         this.name = name;
         this.fromCompany = fromCompany;
@@ -117,7 +118,7 @@ public class Package {
         this.status = status;
         this.size = size;
         this.weight = weight;
-        this.contens = contens;
+        this.contents = contents;
         this.expectedDeliveryDate = expectedDeliveryDate;
         this.locationLat = locationLat;
         this.locationLong = locationLong;

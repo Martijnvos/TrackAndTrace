@@ -3,7 +3,7 @@ package interfaces;
 import classes.Account;
 
 public interface IAccountManager {
-    void registerAccount(String username, String password, boolean isEmployee, String address);
+    void registerAccount(String username, String password, boolean isEmployee, String address, String emailAddress);
     Account getAccount(int ID);
     void updateAccount(Account newAccount);
     void deleteAccount(int ID);
