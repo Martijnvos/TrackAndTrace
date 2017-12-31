@@ -1,7 +1,9 @@
-package RMIinterfaces;
+package interfaces;
 
 import classes.Account;
+import com.sun.org.apache.xml.internal.utils.SerializableLocatorImpl;
 
+import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;

@@ -3,10 +3,11 @@ package classes;
 import enums.ShippingType;
 import enums.Status;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class Package {
+public class Package implements Serializable {
     private int ID;
     private String name;
     private String fromCompany;

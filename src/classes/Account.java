@@ -1,6 +1,8 @@
 package classes;
 
-public class Account {
+import java.io.Serializable;
+
+public class Account implements Serializable {
     private int ID;
     private String username;
     private String password;

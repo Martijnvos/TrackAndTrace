@@ -2,7 +2,7 @@ package classes;
 
 import globals.Globals;
 import interfaces.IAccountManager;
-import RMIinterfaces.IAccountQueries;
+import interfaces.IAccountQueries;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.rmi.NotBoundException;
