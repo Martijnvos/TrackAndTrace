@@ -3,10 +3,10 @@ package interfaces;
 import classes.Account;
 
 public interface IAccountManager {
-    void registerAccount(String username, String password, boolean isEmployee, String address, String emailAddress);
+    boolean registerAccount(String username, String password, boolean isEmployee, String address, String emailAddress);
     Account getAccount(int ID);
-    void updateAccount(Account newAccount);
-    void deleteAccount(int ID);
+    boolean updateAccount(Account newAccount);
+    boolean deleteAccount(int ID);
 
     boolean logIn(String username, String password);
     boolean logOut(Account account);

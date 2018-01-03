@@ -10,6 +10,17 @@ import java.rmi.RemoteException;
 
 public class AccountManager implements IAccountManager {
 
+    private IAccountQueries stub;
+
+    public AccountManager() {
+        try {
+            stub = (IAccountQueries) Globals.registry.lookup(Globals.accountQueriesBindingName);
+        } catch(RemoteException | NotBoundException e) {
+            System.err.println("Client exception: " + e.toString());
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Register new Account with corresponding values
      * @param username username corresponding to new Account, needs to be unique
@@ -19,8 +30,19 @@ public class AccountManager implements IAccountManager {
      * @param emailAddress emailAddress of new Account
      */
     @Override
-    public void registerAccount(String username, String password, boolean isEmployee, String address, String emailAddress) {
-        throw new NotImplementedException();
+    public boolean registerAccount(String username, String password, boolean isEmployee, String address, String emailAddress) {
+        try {
+            boolean succeeded = stub.addAccount(new Account(username, password, isEmployee, address, emailAddress));
+
+            if (!succeeded) return false;
+
+            Globals.loggedInAccount = new Account(username, password, isEmployee, address, emailAddress);
+            return true;
+        } catch(RemoteException e) {
+            System.err.println("Client exception: " + e.toString());
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
@@ -30,7 +52,13 @@ public class AccountManager implements IAccountManager {
      */
     @Override
     public Account getAccount(int ID) {
-        throw new NotImplementedException();
+        try {
+            return stub.getAccount(ID);
+        } catch(RemoteException e){
+            System.err.println("Client exception: " + e.toString());
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -39,8 +67,19 @@ public class AccountManager implements IAccountManager {
      * @param newAccount Updated Account with valid ID
      */
     @Override
-    public void updateAccount(Account newAccount) {
-        throw new NotImplementedException();
+    public boolean updateAccount(Account newAccount) {
+        try {
+            boolean succeeded = stub.updateAccount(newAccount);
+
+            if (!succeeded) return false;
+
+            Globals.loggedInAccount = newAccount;
+            return true;
+        } catch(RemoteException e){
+            System.err.println("Client exception: " + e.toString());
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
@@ -48,8 +87,19 @@ public class AccountManager implements IAccountManager {
      * @param ID ID of Account to be removed
      */
     @Override
-    public void deleteAccount(int ID) {
-        throw new NotImplementedException();
+    public boolean deleteAccount(int ID) {
+        try {
+            boolean succeeded = stub.deleteAccount(ID);
+
+            if (!succeeded) return false;
+
+            Globals.loggedInAccount = null;
+            return true;
+        } catch(RemoteException e) {
+            System.err.println("Client exception: " + e.toString());
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
@@ -61,19 +111,16 @@ public class AccountManager implements IAccountManager {
     @Override
     public boolean logIn(String username, String password) {
         try {
-            IAccountQueries stub = (IAccountQueries) Globals.registry.lookup(Globals.accountQueriesBindingName);
             Account response = stub.logIn(username, password);
 
-            // TODO set loggedInAccount in Globals
-
-            System.out.println("response: " + response);
+            Globals.loggedInAccount = response;
 
             return response != null;
-        } catch (RemoteException | NotBoundException e) {
+        } catch (RemoteException e) {
             System.err.println("Client exception: " + e.toString());
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     /**
@@ -83,6 +130,21 @@ public class AccountManager implements IAccountManager {
      */
     @Override
     public boolean logOut(Account account) {
-        throw new NotImplementedException();
+        try {
+            boolean succeeded = stub.logOut(account);
+
+            if (!succeeded) return false;
+
+            Globals.loggedInAccount = null;
+            return true;
+        } catch (RemoteException e) {
+            System.err.println("Client exception: " + e.toString());
+            e.printStackTrace();
+            return false;
+        } catch (NotImplementedException e) {
+            //TODO remove when logOut on server is implemented  correctly
+            e.printStackTrace();
+            return false;
+        }
     }
 }

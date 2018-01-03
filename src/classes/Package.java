@@ -13,7 +13,7 @@ public class Package implements Serializable {
     private String fromCompany;
     private ShippingType shippingType;
     private Status status;
-    private double size;
+    private String size;
     private int weight;
     private String contents;
     private LocalDate expectedDeliveryDate;
@@ -52,10 +52,10 @@ public class Package implements Serializable {
         this.status = status;
     }
 
-    public double getSize() {
+    public String getSize() {
         return size;
     }
-    public void setSize(double size) {
+    public void setSize(String size) {
         this.size = size;
     }
 
@@ -95,7 +95,7 @@ public class Package implements Serializable {
     }
 
     public Package(int ID, String name, String fromCompany, ShippingType shippingType, Status status,
-                   double size, int weight, String contents, LocalDate expectedDeliveryDate,
+                   String size, int weight, String contents, LocalDate expectedDeliveryDate,
                    double locationLat, double locationLong) {
         this.ID = ID;
         this.name = name;
@@ -111,7 +111,7 @@ public class Package implements Serializable {
     }
 
     public Package(String name, String fromCompany, ShippingType shippingType, Status status,
-                   double size, int weight, String contents, LocalDate expectedDeliveryDate,
+                   String size, int weight, String contents, LocalDate expectedDeliveryDate,
                    double locationLat, double locationLong) {
         this.name = name;
         this.fromCompany = fromCompany;
@@ -123,5 +123,14 @@ public class Package implements Serializable {
         this.expectedDeliveryDate = expectedDeliveryDate;
         this.locationLat = locationLat;
         this.locationLong = locationLong;
+    }
+
+    @Override
+    public String toString() {
+        if (getName() != null) {
+            return String.format("ID : %d, Name : %s, Shippingtype: %s, Status: %s", getID(), getName(), getShippingType(), getStatus());
+        } else {
+            return String.format("ID : %d, Name : Not provided, Shippingtype: %s, Status: %s", getID(), getShippingType(), getStatus());
+        }
     }
 }

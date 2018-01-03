@@ -10,6 +10,6 @@ public interface IPackageQueries extends Remote {
     Package getPackage(int packageID) throws RemoteException;
     ArrayList<Package> getAllPackagesOfAccount(int accountID) throws RemoteException;
     boolean addPackage(Package packageInstantiation) throws RemoteException;
-    boolean updatePackage(Package packageInstantiation) throws RemoteException;
+    boolean updatePackage(Package packageInstantiation, int accountID) throws RemoteException;
     boolean deletePackage(int packageID) throws RemoteException;
 }

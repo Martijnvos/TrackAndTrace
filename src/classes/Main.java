@@ -1,5 +1,6 @@
 package classes;
 
+import controllers.TrackAndTrace;
 import globals.Globals;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,12 +14,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        Globals.registry = LocateRegistry.getRegistry("localhost", 1099);
+
         Parent root = FXMLLoader.load(getClass().getResource(Globals.LoginRegisterFileName));
         primaryStage.setTitle(Globals.ApplicationTitle);
         primaryStage.setScene(new Scene(root, Globals.ApplicationSceneWidth, Globals.ApplicationSceneHeight));
         primaryStage.show();
-
-        Globals.registry = LocateRegistry.getRegistry("localhost", 1099);
 
         new TrackAndTrace();
     }

@@ -2,9 +2,12 @@ package interfaces;
 
 import classes.Package;
 
+import java.util.ArrayList;
+
 public interface IPackageManager {
     Package getPackage(int ID);
-    void addPackage(Package packageInstance);
-    void updatePackage(Package newPackageInstance);
-    void deletePackage(int ID);
+    ArrayList<Package> getAllPackagesOfAccount(int accountID);
+    boolean addPackage(Package packageInstance);
+    boolean updatePackage(Package newPackageInstance);
+    boolean deletePackage(int ID);
 }
