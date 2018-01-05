@@ -61,7 +61,7 @@ public class PackageManager implements IPackageManager {
     @Override
     public boolean addPackage(Package packageInstance) {
         try {
-            boolean succeeded = stub.addPackage(packageInstance);
+            boolean succeeded = stub.addPackage(packageInstance, Globals.loggedInAccount.getID());
 
             if (!succeeded) return false;
 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="570.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TrackAndTrace">
+   <children>
+      <Button fx:id="addPackageButton" layoutX="463.0" layoutY="490.0" mnemonicParsing="false" onAction="#addPackage" text="Add Package" />
+      <Label layoutX="62.0" layoutY="79.0" text="Name" />
+      <TextField fx:id="addPackageName" layoutX="62.0" layoutY="108.0" />
+      <Label layoutX="62.0" layoutY="157.0" text="From company" />
+      <TextField fx:id="addPackageFromCompany" layoutX="62.0" layoutY="186.0" />
+      <Label layoutX="62.0" layoutY="230.0" text="Shippingtype" />
+      <Label layoutX="62.0" layoutY="312.0" text="Status" />
+      <Label layoutX="62.0" layoutY="389.0" text="Size" />
+      <TextField fx:id="addPackageSize" layoutX="62.0" layoutY="418.0" />
+      <Label layoutX="353.0" layoutY="90.0" text="Weight (grams)" />
+      <TextField fx:id="addPackageWeight" layoutX="353.0" layoutY="119.0" />
+      <Label layoutX="353.0" layoutY="163.0" text="Contents" />
+      <TextField fx:id="addPackageContents" layoutX="353.0" layoutY="194.0" />
+      <Label layoutX="351.0" layoutY="240.0" text="Expected delivery date" />
+      <DatePicker fx:id="addPackageExpectedDeliveryDate" layoutX="352.0" layoutY="269.0" />
+      <Label layoutX="61.0" layoutY="32.0" text="Package Addition">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <TextField fx:id="addPackageLatitude" layoutX="353.0" layoutY="341.0" />
+      <TextField fx:id="addPackageLongitude" layoutX="353.0" layoutY="418.0" />
+      <Label layoutX="353.0" layoutY="312.0" text="Latitude" />
+      <Label layoutX="353.0" layoutY="389.0" text="Longitude" />
+      <Button fx:id="addPackageHomeButton" layoutX="57.0" layoutY="490.0" mnemonicParsing="false" onAction="#backHome" text="Back home" />
+      <ComboBox fx:id="addPackageShippingType" layoutX="62.0" layoutY="270.0" prefHeight="31.0" prefWidth="187.0" />
+      <ComboBox fx:id="addPackageStatus" layoutX="62.0" layoutY="341.0" prefHeight="31.0" prefWidth="187.0" />
+   </children>
+</AnchorPane>

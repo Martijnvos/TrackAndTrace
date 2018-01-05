@@ -16,6 +16,8 @@ public class Globals {
     public static final String LoginRegisterFileName = "/layouts/loginRegister.fxml";
     public static final String HomeFileName = "/layouts/home.fxml";
     public static final String PackageDetailsFileName = "/layouts/packageDetails.fxml";
+    public static final String AccountSettingsFileName = "/layouts/accountSettings.fxml";
+    public static final String AddPackageFileName = "/layouts/addPackage.fxml";
 
     // Account
     public static Account loggedInAccount;
