@@ -55,12 +55,12 @@
       <Label text="Address" GridPane.columnIndex="4" GridPane.rowIndex="7" />
       <TextField fx:id="registerEmailAddressTextField" GridPane.columnIndex="4" GridPane.rowIndex="10" />
       <Label text="Emailaddress" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-      <Label text="Log In" textFill="#d98a1c" GridPane.columnIndex="1">
+      <Label text="Log In" GridPane.columnIndex="1">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <Label text="Register" textFill="#da8b1b" GridPane.columnIndex="4">
+      <Label text="Register" GridPane.columnIndex="4">
          <font>
             <Font size="22.0" />
          </font>
