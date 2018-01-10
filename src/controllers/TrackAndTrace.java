@@ -8,7 +8,9 @@ import convenienceClasses.AlertDialog;
 import enums.ShippingType;
 import enums.Status;
 import globals.Globals;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +20,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +35,11 @@ public class TrackAndTrace {
 
     private ArrayList<Package> currentPackagesOfAccount;
     private List<TextField> packageDetailsItems;
+    private ObservableList<String> observablePackageList;
+
+    public PackageManager getPackageManager() {
+        return packageManager;
+    }
 
     // Login/Register screen contents
     @FXML private TextField loginUsernameTextField, registerUsernameTextField, registerAddressTextField, registerEmailAddressTextField;
@@ -67,7 +75,11 @@ public class TrackAndTrace {
 
     public TrackAndTrace(){
         accountManager = new AccountManager();
-        packageManager = new PackageManager();
+        try {
+            packageManager = new PackageManager(this);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -263,7 +275,8 @@ public class TrackAndTrace {
             // Get description from packages based on the toString method
             List<String> packageDescriptions = currentPackagesOfAccount.stream().map(Object::toString).collect(Collectors.toList());
             // Apply the given descriptions to the ListView
-            packagesListView.setItems(FXCollections.observableArrayList(packageDescriptions));
+            observablePackageList = FXCollections.observableList(packageDescriptions);
+            packagesListView.setItems(observablePackageList);
         }
     }
 
@@ -401,7 +414,7 @@ public class TrackAndTrace {
         double latitude = Double.valueOf(addPackageLatitude.getText());
         double longitude = Double.valueOf(addPackageLongitude.getText());
 
-        Package newPackage = new Package(name, fromCompany, shippingType, status, size, weight, contents,
+        Package newPackage = new Package(Globals.loggedInAccount.getID(), name, fromCompany, shippingType, status, size, weight, contents,
                 expectedDeliveryDate, latitude, longitude);
 
         boolean succeeded = packageManager.addPackage(newPackage);
@@ -429,6 +442,10 @@ public class TrackAndTrace {
         Stage stage;
         Parent root;
 
+        // Unsubscribe PackageManager to prevent multiple propertyChange calls
+        // when leftover class exists after switching Scene
+        packageManager.unsubscribeRemotePublisher();
+
         if (actionEventObject == logInButton || actionEventObject == registerButton) {
             stage = (Stage) logInButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource(Globals.HomeFileName));
@@ -454,11 +471,28 @@ public class TrackAndTrace {
             stage = (Stage) homeAddPackageButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource(Globals.AddPackageFileName));
         } else {
+            try {
+                packageManager = new PackageManager(this);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             return;
         }
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void updateInPackageList(Package packageToBeUpdated) {
+        // Update observable list of packages in listview
+        Platform.runLater(() -> {
+            for (int i = 0; i < observablePackageList.size(); i++) {
+                if (observablePackageList.get(i).startsWith("ID : " + packageToBeUpdated.getID())) {
+                    observablePackageList.set(i, packageToBeUpdated.toString());
+                    packagesListView.setItems(observablePackageList);
+                }
+            }
+        });
     }
 }

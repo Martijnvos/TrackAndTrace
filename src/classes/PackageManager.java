@@ -1,26 +1,50 @@
 package classes;
 
+import controllers.TrackAndTrace;
+import fontyspublisher.IRemotePropertyListener;
+import fontyspublisher.IRemotePublisherForListener;
 import globals.Globals;
 import interfaces.IPackageManager;
 import interfaces.IPackageQueries;
-import sun.security.x509.IPAddressName;
 
+import java.beans.PropertyChangeEvent;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class PackageManager implements IPackageManager {
+public class PackageManager extends UnicastRemoteObject implements IPackageManager, IRemotePropertyListener {
+
+    private TrackAndTrace trackAndTrace;
 
     private ArrayList<Package> packages;
     private IPackageQueries stub;
+    private IRemotePublisherForListener remotePublisher;
 
-    public PackageManager() {
+    public IRemotePublisherForListener getRemotePublisher() {
+        return remotePublisher;
+    }
+
+    public PackageManager(TrackAndTrace trackAndTrace) throws RemoteException {
+        super();
         packages = new ArrayList<>();
+        this.trackAndTrace = trackAndTrace;
 
         try {
             stub = (IPackageQueries) Globals.registry.lookup(Globals.packageQueriesBindingName);
+            remotePublisher = (IRemotePublisherForListener) Globals.registry.lookup(Globals.remotePublisherPackageBindingName);
+
+            remotePublisher.subscribeRemoteListener(this, Globals.remotePublisherPackageChangesString);
         } catch (RemoteException | NotBoundException e) {
             System.err.println("Client exception: " + e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void unsubscribeRemotePublisher() {
+        try {
+            remotePublisher.unsubscribeRemoteListener(this, Globals.remotePublisherPackageChangesString);
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
@@ -61,7 +85,7 @@ public class PackageManager implements IPackageManager {
     @Override
     public boolean addPackage(Package packageInstance) {
         try {
-            boolean succeeded = stub.addPackage(packageInstance, Globals.loggedInAccount.getID());
+            boolean succeeded = stub.addPackage(packageInstance);
 
             if (!succeeded) return false;
 
@@ -82,7 +106,7 @@ public class PackageManager implements IPackageManager {
     @Override
     public boolean updatePackage(Package newPackageInstance) {
         try {
-            boolean succeeded = stub.updatePackage(newPackageInstance, Globals.loggedInAccount.getID());
+            boolean succeeded = stub.updatePackage(newPackageInstance);
 
             if (!succeeded) return false;
 
@@ -112,6 +136,19 @@ public class PackageManager implements IPackageManager {
             System.err.println("Client exception: " + e.toString());
             e.printStackTrace();
             return false;
+        }
+    }
+
+    /**
+     * Changelistener of remote Package for location updates
+     * @param propertyChangeEvent Event that gets fired by the remote publisher
+     * @throws RemoteException when an exception occurred on the server-side or when transmitting the data
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent propertyChangeEvent) throws RemoteException {
+        if (propertyChangeEvent.getNewValue() != null) {
+            Package newPackage = (Package) propertyChangeEvent.getNewValue();
+            trackAndTrace.updateInPackageList(newPackage);
         }
     }
 }

@@ -5,14 +5,14 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="434.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TrackAndTrace">
+<AnchorPane prefHeight="434.0" prefWidth="981.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TrackAndTrace">
    <children>
-      <Button fx:id="homeLogOutButton" layoutX="512.0" layoutY="14.0" mnemonicParsing="false" onAction="#homeLogOut" text="Log Out" />
-      <ListView fx:id="packagesListView" layoutX="58.0" layoutY="73.0" prefHeight="271.0" prefWidth="516.0" />
+      <Button fx:id="homeLogOutButton" layoutX="847.0" layoutY="14.0" mnemonicParsing="false" onAction="#homeLogOut" text="Log Out" />
+      <ListView fx:id="packagesListView" layoutX="58.0" layoutY="73.0" prefHeight="271.0" prefWidth="863.0" />
       <Label layoutX="58.0" layoutY="45.0" text="Packages" />
-      <Button fx:id="homePackageDetailsButton" layoutX="450.0" layoutY="372.0" mnemonicParsing="false" onAction="#viewPackageDetails" text="Package Details" />
-      <Button fx:id="homeEditAccountButton" layoutX="374.0" layoutY="14.0" mnemonicParsing="false" onAction="#homeEditAccount" text="Edit Account" />
+      <Button fx:id="homePackageDetailsButton" layoutX="797.0" layoutY="372.0" mnemonicParsing="false" onAction="#viewPackageDetails" text="Package Details" />
+      <Button fx:id="homeEditAccountButton" layoutX="709.0" layoutY="14.0" mnemonicParsing="false" onAction="#homeEditAccount" text="Edit Account" />
       <Button fx:id="homeRemovePackageButton" layoutX="58.0" layoutY="372.0" mnemonicParsing="false" onAction="#removePackage" text="Remove package" textFill="#f80000" />
-      <Button fx:id="homeAddPackageButton" layoutX="321.0" layoutY="372.0" mnemonicParsing="false" onAction="#addPackageScreen" text="Add Package" />
+      <Button fx:id="homeAddPackageButton" layoutX="668.0" layoutY="372.0" mnemonicParsing="false" onAction="#addPackageScreen" text="Add Package" />
    </children>
 </AnchorPane>

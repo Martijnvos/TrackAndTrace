@@ -24,10 +24,12 @@ public class Globals {
 
     // Registry
     public static Registry registry;
+    public static final String remotePublisherPackageChangesString = "packageChanges";
 
     // Registry binding names
     public static final String accountQueriesBindingName = "accountQueriesBinding";
     public static final String packageQueriesBindingName = "packageQueriesBinding";
+    public static final String remotePublisherPackageBindingName = "packageRemotePublisherBinding";
 
     // GUI helper classes
     public static Package packageToBeViewed;

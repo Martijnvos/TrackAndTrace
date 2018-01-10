@@ -9,6 +9,7 @@ import java.util.Date;
 
 public class Package implements Serializable {
     private int ID;
+    private int accountID;
     private String name;
     private String fromCompany;
     private ShippingType shippingType;
@@ -23,6 +24,8 @@ public class Package implements Serializable {
     public int getID() {
         return ID;
     }
+
+    public int getAccountID() { return accountID; }
 
     public String getName() {
         return name;
@@ -94,10 +97,11 @@ public class Package implements Serializable {
         this.locationLong = locationLong;
     }
 
-    public Package(int ID, String name, String fromCompany, ShippingType shippingType, Status status,
+    public Package(int ID, int accountID, String name, String fromCompany, ShippingType shippingType, Status status,
                    String size, int weight, String contents, LocalDate expectedDeliveryDate,
                    double locationLat, double locationLong) {
         this.ID = ID;
+        this.accountID = accountID;
         this.name = name;
         this.fromCompany = fromCompany;
         this.shippingType = shippingType;
@@ -110,9 +114,10 @@ public class Package implements Serializable {
         this.locationLong = locationLong;
     }
 
-    public Package(String name, String fromCompany, ShippingType shippingType, Status status,
+    public Package(int accountID, String name, String fromCompany, ShippingType shippingType, Status status,
                    String size, int weight, String contents, LocalDate expectedDeliveryDate,
                    double locationLat, double locationLong) {
+        this.accountID = accountID;
         this.name = name;
         this.fromCompany = fromCompany;
         this.shippingType = shippingType;
@@ -127,10 +132,15 @@ public class Package implements Serializable {
 
     @Override
     public String toString() {
-        if (getName() != null) {
-            return String.format("ID : %d, Name : %s, Shippingtype: %s, Status: %s", getID(), getName(), getShippingType(), getStatus());
+        if (getName() != null && getLocationLat() != 0 && getLocationLong() != 0) {
+            return String.format("ID : %d, Name : %s, Shippingtype: %s, Status: %s, Latitude: %s, Longitude: %s",
+                    getID(), getName(), getShippingType(), getStatus(), getLocationLat(), getLocationLong());
+        } else if (getName() == null && getLocationLat() != 0 && getLocationLong() != 0) {
+            return String.format("ID : %d, Name : Not provided, Shippingtype: %s, Status: %s, Latitude: %s, Longitude: %s",
+                    getID(), getShippingType(), getStatus(), getLocationLat(), getLocationLong());
         } else {
-            return String.format("ID : %d, Name : Not provided, Shippingtype: %s, Status: %s", getID(), getShippingType(), getStatus());
+            return String.format("ID : %d, Name : Not provided, Shippingtype: %s, Status: %s",
+                    getID(), getShippingType(), getStatus());
         }
     }
 }
