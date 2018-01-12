@@ -30,6 +30,7 @@ public class Globals {
     public static final String accountQueriesBindingName = "accountQueriesBinding";
     public static final String packageQueriesBindingName = "packageQueriesBinding";
     public static final String remotePublisherPackageBindingName = "packageRemotePublisherBinding";
+    public static final String packageUpdateBindingName = "packageUpdateBinding";
 
     // GUI helper classes
     public static Package packageToBeViewed;

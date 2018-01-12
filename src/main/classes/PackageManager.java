@@ -6,6 +6,7 @@ import fontyspublisher.IRemotePublisherForListener;
 import globals.Globals;
 import interfaces.IPackageManager;
 import interfaces.IPackageQueries;
+import interfaces.IPackageUpdates;
 
 import java.beans.PropertyChangeEvent;
 import java.rmi.NotBoundException;
@@ -13,12 +14,13 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class PackageManager extends UnicastRemoteObject implements IPackageManager, IRemotePropertyListener {
+public class PackageManager extends UnicastRemoteObject implements IPackageManager, IPackageUpdates, IRemotePropertyListener {
 
     private TrackAndTrace trackAndTrace;
 
     private ArrayList<Package> packages;
     private IPackageQueries stub;
+    private IPackageUpdates packageUpdateStub;
     private IRemotePublisherForListener remotePublisher;
 
     public IRemotePublisherForListener getRemotePublisher() {
@@ -32,6 +34,7 @@ public class PackageManager extends UnicastRemoteObject implements IPackageManag
 
         try {
             stub = (IPackageQueries) Globals.registry.lookup(Globals.packageQueriesBindingName);
+            packageUpdateStub = (IPackageUpdates) Globals.registry.lookup(Globals.packageUpdateBindingName);
             remotePublisher = (IRemotePublisherForListener) Globals.registry.lookup(Globals.remotePublisherPackageBindingName);
 
             remotePublisher.subscribeRemoteListener(this, Globals.remotePublisherPackageChangesString);
@@ -45,6 +48,22 @@ public class PackageManager extends UnicastRemoteObject implements IPackageManag
         try {
             remotePublisher.unsubscribeRemoteListener(this, Globals.remotePublisherPackageChangesString);
         } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setPackageLocationUpdates() {
+        try {
+            packageUpdateStub.setPackageLocationUpdates();
+        } catch(RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unSetPackageLocationUpdates() {
+        try {
+            packageUpdateStub.unSetPackageLocationUpdates();
+        } catch(RemoteException e) {
             e.printStackTrace();
         }
     }

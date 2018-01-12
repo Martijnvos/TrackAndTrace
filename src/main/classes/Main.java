@@ -19,7 +19,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Globals.registry = LocateRegistry.getRegistry("localhost", 1099);
+        Globals.registry = LocateRegistry.getRegistry("127.0.0.1", 1099);
 
         FXMLLoader loader = new FXMLLoader( getClass().getResource(Globals.LoginRegisterFileName));
         Parent root = loader.load();

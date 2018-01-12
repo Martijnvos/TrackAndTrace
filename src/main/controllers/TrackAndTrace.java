@@ -324,6 +324,13 @@ public class TrackAndTrace {
                 packageContents, packageExpectedDeliveryDate,
                 Globals.packageToBeViewed.getLocationLat(), Globals.packageToBeViewed.getLocationLong());
 
+        if (LocalDate.now().isAfter(packageExpectedDeliveryDate)) {
+            AlertDialog.createAlert(Alert.AlertType.ERROR, "Package not updated",
+                    "Illogical delivery date",
+                    "Your Package is not updated because of an illogical delivery date");
+            return;
+        }
+
         boolean succeeded = packageManager.updatePackage(updatedPackage);
 
         if(!succeeded){
@@ -417,6 +424,13 @@ public class TrackAndTrace {
         Package newPackage = new Package(Globals.loggedInAccount.getID(), name, fromCompany, shippingType, status, size, weight, contents,
                 expectedDeliveryDate, latitude, longitude);
 
+        if (LocalDate.now().isAfter(expectedDeliveryDate)) {
+            AlertDialog.createAlert(Alert.AlertType.ERROR, "Package not added",
+                    "Illogical delivery date",
+                    "Your Package is not added because of an illogical delivery date");
+            return;
+        }
+
         boolean succeeded = packageManager.addPackage(newPackage);
 
         if(!succeeded) AlertDialog.createAlert(Alert.AlertType.ERROR, "Package not added", "Could not add Package",
@@ -449,27 +463,35 @@ public class TrackAndTrace {
         if (actionEventObject == logInButton || actionEventObject == registerButton) {
             stage = (Stage) logInButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource(Globals.HomeFileName));
+            packageManager.setPackageLocationUpdates();
         } else if (actionEventObject == homeLogOutButton) {
             stage = (Stage) homeLogOutButton.getScene().getWindow();
+            packageManager.unSetPackageLocationUpdates();
             root = FXMLLoader.load(getClass().getResource(Globals.LoginRegisterFileName));
         } else if (actionEventObject == homePackageDetailsButton) {
             stage = (Stage) homePackageDetailsButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource(Globals.PackageDetailsFileName));
+            packageManager.unSetPackageLocationUpdates();
         } else if (actionEventObject == packageHomeButton) {
             stage = (Stage) packageHomeButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource(Globals.HomeFileName));
+            packageManager.setPackageLocationUpdates();
         } else if (actionEventObject == accountSettingsHomeButton) {
             stage = (Stage) accountSettingsHomeButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource(Globals.HomeFileName));
+            packageManager.setPackageLocationUpdates();
         } else if (actionEventObject == addPackageHomeButton) {
             stage = (Stage) addPackageHomeButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource(Globals.HomeFileName));
+            packageManager.unSetPackageLocationUpdates();
         } else if (actionEventObject == homeEditAccountButton) {
             stage = (Stage) homeEditAccountButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource(Globals.AccountSettingsFileName));
+            packageManager.unSetPackageLocationUpdates();
         } else if (actionEventObject == homeAddPackageButton) {
             stage = (Stage) homeAddPackageButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource(Globals.AddPackageFileName));
+            packageManager.unSetPackageLocationUpdates();
         } else {
             try {
                 packageManager = new PackageManager(this);
