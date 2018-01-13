@@ -23,6 +23,12 @@ public class PackageManager extends UnicastRemoteObject implements IPackageManag
     private IPackageUpdates packageUpdateStub;
     private IRemotePublisherForListener remotePublisher;
 
+    public IPackageQueries getStub() {
+        return stub;
+    }
+    public IPackageUpdates getPackageUpdateStub() {
+        return packageUpdateStub;
+    }
     public IRemotePublisherForListener getRemotePublisher() {
         return remotePublisher;
     }

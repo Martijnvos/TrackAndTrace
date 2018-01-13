@@ -5,6 +5,7 @@ import classes.AccountManager;
 import classes.Package;
 import classes.PackageManager;
 import convenienceClasses.AlertDialog;
+import convenienceClasses.WrongConstructorException;
 import enums.ShippingType;
 import enums.Status;
 import globals.Globals;
@@ -80,6 +81,10 @@ public class TrackAndTrace {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    public TrackAndTrace(boolean test) throws WrongConstructorException {
+        if (!test) throw new WrongConstructorException("This constructor is not meant to be used for anything other than testing");
     }
 
     /**

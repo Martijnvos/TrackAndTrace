@@ -12,6 +12,10 @@ public class AccountManager implements IAccountManager {
 
     private IAccountQueries stub;
 
+    public IAccountQueries getAccuntQueriesStub() {
+        return stub;
+    }
+
     public AccountManager() {
         try {
             stub = (IAccountQueries) Globals.registry.lookup(Globals.accountQueriesBindingName);
