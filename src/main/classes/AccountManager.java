@@ -145,10 +145,6 @@ public class AccountManager implements IAccountManager {
             System.err.println("Client exception: " + e.toString());
             e.printStackTrace();
             return false;
-        } catch (NotImplementedException e) {
-            //TODO remove when logOut on server is implemented  correctly
-            e.printStackTrace();
-            return false;
         }
     }
 }

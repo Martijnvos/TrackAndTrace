@@ -58,9 +58,9 @@ public class PackageManager extends UnicastRemoteObject implements IPackageManag
         }
     }
 
-    public void setPackageLocationUpdates() {
+    public void setPackageLocationUpdates(int accountID) {
         try {
-            packageUpdateStub.setPackageLocationUpdates();
+            packageUpdateStub.setPackageLocationUpdates(accountID);
         } catch(RemoteException e) {
             e.printStackTrace();
         }

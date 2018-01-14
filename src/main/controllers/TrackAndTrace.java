@@ -41,6 +41,9 @@ public class TrackAndTrace {
     public PackageManager getPackageManager() {
         return packageManager;
     }
+    public AccountManager getAccountManager() {
+        return accountManager;
+    }
 
     // Login/Register screen contents
     @FXML private TextField loginUsernameTextField, registerUsernameTextField, registerAddressTextField, registerEmailAddressTextField;
@@ -468,7 +471,7 @@ public class TrackAndTrace {
         if (actionEventObject == logInButton || actionEventObject == registerButton) {
             stage = (Stage) logInButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource(Globals.HomeFileName));
-            packageManager.setPackageLocationUpdates();
+            packageManager.setPackageLocationUpdates(Globals.loggedInAccount.getID());
         } else if (actionEventObject == homeLogOutButton) {
             stage = (Stage) homeLogOutButton.getScene().getWindow();
             packageManager.unSetPackageLocationUpdates();
@@ -480,11 +483,11 @@ public class TrackAndTrace {
         } else if (actionEventObject == packageHomeButton) {
             stage = (Stage) packageHomeButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource(Globals.HomeFileName));
-            packageManager.setPackageLocationUpdates();
+            packageManager.setPackageLocationUpdates(Globals.loggedInAccount.getID());
         } else if (actionEventObject == accountSettingsHomeButton) {
             stage = (Stage) accountSettingsHomeButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource(Globals.HomeFileName));
-            packageManager.setPackageLocationUpdates();
+            packageManager.setPackageLocationUpdates(Globals.loggedInAccount.getID());
         } else if (actionEventObject == addPackageHomeButton) {
             stage = (Stage) addPackageHomeButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource(Globals.HomeFileName));

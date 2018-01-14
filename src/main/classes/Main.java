@@ -34,6 +34,7 @@ public class Main extends Application {
                 trackAndTrace.getPackageManager().getRemotePublisher().unsubscribeRemoteListener(
                         trackAndTrace.getPackageManager(), Globals.remotePublisherPackageChangesString);
                 trackAndTrace.getPackageManager().unSetPackageLocationUpdates();
+                trackAndTrace.getAccountManager().logOut(Globals.loggedInAccount);
             } catch(RemoteException e) {
                 e.printStackTrace();
             }
