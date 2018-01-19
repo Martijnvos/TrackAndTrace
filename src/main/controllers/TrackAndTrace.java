@@ -327,17 +327,17 @@ public class TrackAndTrace {
         String packageContents = packageDetailsContents.getText();
         LocalDate packageExpectedDeliveryDate = packageDetailsExpectedDeliveryDate.getValue();
 
-        Package updatedPackage = new Package(Globals.packageToBeViewed.getID(), packageName, packageFromCompany,
-                packageShippingType, packageStatus, packageSize, packageWeight,
-                packageContents, packageExpectedDeliveryDate,
-                Globals.packageToBeViewed.getLocationLat(), Globals.packageToBeViewed.getLocationLong());
-
         if (LocalDate.now().isAfter(packageExpectedDeliveryDate)) {
             AlertDialog.createAlert(Alert.AlertType.ERROR, "Package not updated",
                     "Illogical delivery date",
                     "Your Package is not updated because of an illogical delivery date");
             return;
         }
+
+        Package updatedPackage = new Package(Globals.packageToBeViewed.getID(), Globals.packageToBeViewed.getAccountID(), packageName, packageFromCompany,
+                packageShippingType, packageStatus, packageSize, packageWeight,
+                packageContents, packageExpectedDeliveryDate,
+                Globals.packageToBeViewed.getLocationLat(), Globals.packageToBeViewed.getLocationLong());
 
         boolean succeeded = packageManager.updatePackage(updatedPackage);
 
